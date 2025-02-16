@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe DB - {% block title %}{% endblock %}</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet"  href="{{ url_for('static', filename="/style/style.css")}}">
+    <script src="{{ url_for('static', filename='/scripts/htmx.js') }}"></script>
+  </head>
+  <body>
+    <h1 class="underline italic text-lg">{% block heading %}Some heading!{% endblock %}</h1>
+    {% block content %}{% endblock %}
+  </body>
+</html>
