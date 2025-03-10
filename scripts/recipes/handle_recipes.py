@@ -26,7 +26,6 @@ def get_single_recipe(objectId):
 
 def search_recipes(query_data):
     query = query_data["q"]
-    print(query, "in search recipes")
     facets_list = []
  
     for item in query_data:
@@ -35,24 +34,41 @@ def search_recipes(query_data):
 
     if len(facets_list) > 0:
         mongo_query = {"tags":{ "$all": facets_list}, "title": { "$regex": query, "$options": "xi" }}
+        print(mongo_query)
     else:
         mongo_query = {"title": { "$regex": query, "$options": "xi" }}
 
     all_recipes = mongo_collection.find(mongo_query).to_list()
     return all_recipes
 
-def get_facets(user, query_data):
-    facet_list = []
-    # Move this all to a helper function
-    for item in query_data:
-        if "choice" in item:
-            facets_list.append(query_data[item])
+def get_facets(user, query_data=None):
+    if query_data is not None:
+        facets_list = []
+        new_list = []
+        query = query_data["q"]
+        for item in query_data:
+            if "choice" in item:
+                facets_list.append(query_data[item])
 
-    if len(facets_list) > 0:
-        mongo_query = {"tags":{ "$all": facets_list}, "title": { "$regex": query, "$options": "xi" }}
+        if len(facets_list) > 0:
+            mongo_query = {"tags":{ "$all": facets_list}, "title": { "$regex": query, "$options": "xi" }}
+        else:
+            mongo_query = {"title": { "$regex": query, "$options": "xi" }}
+
+        facets = mongo_collection.distinct("tags", mongo_query)
+        
+        for facet in facets:
+            if facet in facets_list:
+                new_list.append({"name": facet, "checked": True})
+            else:
+                new_list.append({"name": facet, "checked": False})
+                
+        return new_list
+
     else:
-        mongo_query = {"title": { "$regex": query, "$options": "xi" }}
-
-    facets = mongo_collection.distinct("tags", mongo_query})
-    print(facet, "in get_facets")
-    return facets
+        new_list = []
+        facets = mongo_collection.distinct("tags")
+        for facet in facets:
+            new_list.append({"name": facet, "checked": False})
+        print(facets, "in get facets")
+        return new_list

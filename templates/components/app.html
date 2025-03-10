@@ -4,7 +4,13 @@
 <h3>Filter by tag</h3>
 <form class="tags" hx-post="/recipes/search" hx-trigger="change" hx-include="#search" hx-target=".app" hx-swap="innerHTML" id="facets">
   {% for facet in facets %}
-  <label><input type="checkbox" name="choice-{{ loop.index }}" value="{{ facet }}" />{{ facet }}</label>
+  <label><input type="checkbox" name="choice-{{ loop.index }}" value="{{ facet.name }}"
+
+    {% if facet.checked %}
+    checked
+    {% endif %}
+
+  />{{ facet.name }}</label>
   {% endfor %}
 </form>
 <hr/>

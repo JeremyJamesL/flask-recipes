@@ -40,11 +40,12 @@ def add_recipe():
         recipe_json = scrape(submitted_url, user)
         new_recipe = add_single_recipe(recipe_json)
         all_recipes = get_all_recipes(user)
-        return render_template("/components/app.html", recipes=all_recipes)
+        all_facets = get_facets(user)
+        return render_template("/components/app.html", recipes=all_recipes, facets=all_facets)
 
 @app.post("/recipes/search")
 def search():
     req_data = request.form.to_dict()
     all_recipes = search_recipes(req_data)
     all_facets = get_facets(user, req_data)
-    return render_template("/components/app.html", recipes=all_recipes)
+    return render_template("/components/app.html", recipes=all_recipes, facets=all_facets)
