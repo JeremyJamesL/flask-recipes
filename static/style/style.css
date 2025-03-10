@@ -1,4 +1,82 @@
-body, html {
-  height: 100%;
-  /*background-color: red;*/
+:root {
+  --bg-colour: #1d1f27;
+  --font-colour: #c9d1d9;
+  --accent-colour: #8cc2dd;
 }
+
+
+body, html {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bg-colour);
+  color: var(--font-colour);
+  font-family: "Verdana";
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+header {
+  margin-bottom: 50px;
+}
+ 
+nav > ul {
+   display: flex;
+   list-style: none;
+   gap: 15px;
+   padding-left: 0;
+} 
+
+ul {
+  padding-left: 15px;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 500px;  
+  height: auto;
+}
+
+a {
+  color: var(--accent-colour);
+}
+
+hr {
+  border: 1px dashed #fff;
+  margin: 20px 0;
+}
+
+.tags  {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 13px;
+  padding-left: 0px;
+  margin-block-start: 0px;
+}
+
+.tags label {
+  cursor: pointer;
+  padding: 2px 5px;
+  border: 1px solid var(--accent-colour);
+  color: var(--accent-colour);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.tags input {
+  display: none;
+}
+
+label:has(input:checked) {
+  background-color: var(--accent-colour);
+  color: var(--bg-colour);
+}
+

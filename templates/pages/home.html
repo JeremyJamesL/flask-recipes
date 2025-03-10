@@ -1,3 +1,16 @@
 {% extends "base.html" %}
-  {% block heading %}
+{% block heading %}Recipes{% endblock %}
+{% block content %}
+<h3>Add new recipe</h3>
+<form hx-post="/recipes/add" hx-trigger="submit load" hx-target=".app" hx-swap="innerHTML">
+  <input type="text" name="url" class="border-2 border-black" /> 
+  <button type="submit" class="cursor-pointer">Submit</button>
+</form>
+
+<h3>Search for recipes 🔎</h3>
+<input type="text" hx-trigger="input" hx-post="/recipes/search" hx-target=".app" hx-include="#facets" name="q" class="border-2 border-black" id="search" /> 
+
+{% include "/components/app.html" %}
 {% endblock %}
+
+

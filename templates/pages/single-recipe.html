@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block heading %}
+{{ single_recipe.title }}
+{% endblock %}
+{% block content %}
+  <img src={{ single_recipe.image }} alt="{{ single_recipe.title }}" />
+  <h2>Ingredients</h2>
+  <ul>
+    {% for ingredient in single_recipe.ingredients %}
+      <li>{{ ingredient }}</li>
+    {% endfor %}
+  </ul>
+  <h2>Instructions</h2>
+  <ul>
+    {% for instruction in single_recipe.instructions %}
+      <li>{{ instruction }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
