@@ -2,6 +2,8 @@
   --bg-colour: #1d1f27;
   --font-colour: #c9d1d9;
   --accent-colour: #8cc2dd;
+  --success: #4bb543;
+  --error: #ff3333;
 }
 
 body,
@@ -22,9 +24,14 @@ header {
   margin-bottom: 50px;
 }
 
+article {
+  padding-bottom: 50px;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 nav > ul {
@@ -43,9 +50,9 @@ main {
   margin: 0 auto;
 }
 
-img {
-  max-width: 500px;
-  height: auto;
+form input {
+  display: block;
+  margin-bottom: 15px;
 }
 
 a {
@@ -89,11 +96,26 @@ label:has(input:checked) {
   color: var(--bg-colour);
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 figure {
+  max-width: 500px;
+  height: auto;
   padding: 0;
   margin: 0;
 }
 
 figure figcaption {
   font-weight: 400;
+}
+
+.error {
+  color: var(--error);
+}
+
+.success {
+  color: var(--success);
 }

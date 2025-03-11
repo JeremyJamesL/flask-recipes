@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block heading %}
+<h1>Login</h1>
+{% endblock %} {% block content %}
+<form hx-post="/login" hx-trigger="submit load" hx-target="#message">
+  <input type="text" name="username" />
+  <input type="password" name="password" />
+  <button type="submit">Submit</button>
+</form>
+<p id="message"></p>
+{% endblock %}
