@@ -1,19 +1,22 @@
-{% extends "base.html" %}
-{% block heading %}
-{{ single_recipe.title }}
-{% endblock %}
-{% block content %}
-  <img src={{ single_recipe.image }} alt="{{ single_recipe.title }}" />
-  <h2>Ingredients</h2>
-  <ul>
-    {% for ingredient in single_recipe.ingredients %}
-      <li>{{ ingredient }}</li>
-    {% endfor %}
-  </ul>
-  <h2>Instructions</h2>
-  <ul>
-    {% for instruction in single_recipe.instructions %}
-      <li>{{ instruction }}</li>
-    {% endfor %}
-  </ul>
+{% extends "base.html" %} {% block heading %} {{ single_recipe.title }} {%
+endblock %} {% block content %}
+<figure>
+  <img src="{{ single_recipe.image }}" alt="{{ single_recipe.title }}" />
+  <figcaption><a href="{{ single_recipe.url }}">Source</a></figcaption>
+</figure>
+<h2>Ingredients</h2>
+<ul>
+  {% for ingredient in single_recipe.ingredients %}
+  <li>{{ ingredient }}</li>
+  {% endfor %}
+</ul>
+<h2>Instructions</h2>
+<ul>
+  {% for instruction in single_recipe.instructions %}
+  <li>{{ instruction }}</li>
+  {% endfor %}
+</ul>
+<button hx-delete="/recipes/delete/{{ single_recipe._id }}">
+  Delete recipe
+</button>
 {% endblock %}

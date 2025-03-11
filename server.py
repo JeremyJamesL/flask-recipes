@@ -2,7 +2,7 @@ import json
 from flask import Flask, render_template, request
 from scripts.database.mongo import mongo_database
 from scripts.scraping.scraper import scrape
-from scripts.recipes.handle_recipes import recipe_exists, add_single_recipe, get_all_recipes, get_single_recipe, get_facets, search_recipes
+from scripts.recipes.handle_recipes import recipe_exists, add_single_recipe, get_all_recipes, get_single_recipe, get_facets, delete_single_recipe, search_recipes
 
 user = "jez"
 app = Flask(__name__)
@@ -49,3 +49,12 @@ def search():
     all_recipes = search_recipes(req_data)
     all_facets = get_facets(user, req_data)
     return render_template("/components/app.html", recipes=all_recipes, facets=all_facets)
+
+@app.delete("/recipes/delete/<recipe_id>")
+def delete_recipe(recipe_id):
+    res = delete_single_recipe(recipe_id)
+    if res["success"]:
+        return f'<p>Recipe {recipe_id} successfully deleted, <a href="/home">Go home</a>'
+    else:
+        error_html = f'<p>Error deleting {recipe_id}</p>'
+        return  error_html, 400 

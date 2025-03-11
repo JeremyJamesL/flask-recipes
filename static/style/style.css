@@ -4,8 +4,8 @@
   --accent-colour: #8cc2dd;
 }
 
-
-body, html {
+body,
+html {
   min-height: 100%;
 }
 
@@ -21,13 +21,18 @@ body {
 header {
   margin-bottom: 50px;
 }
- 
+
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
 nav > ul {
-   display: flex;
-   list-style: none;
-   gap: 15px;
-   padding-left: 0;
-} 
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  padding-left: 0;
+}
 
 ul {
   padding-left: 15px;
@@ -39,7 +44,7 @@ main {
 }
 
 img {
-  max-width: 500px;  
+  max-width: 500px;
   height: auto;
 }
 
@@ -47,12 +52,16 @@ a {
   color: var(--accent-colour);
 }
 
+button {
+  font-family: inherit;
+}
+
 hr {
   border: 1px dashed #fff;
   margin: 20px 0;
 }
 
-.tags  {
+.tags {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -80,3 +89,11 @@ label:has(input:checked) {
   color: var(--bg-colour);
 }
 
+figure {
+  padding: 0;
+  margin: 0;
+}
+
+figure figcaption {
+  font-weight: 400;
+}

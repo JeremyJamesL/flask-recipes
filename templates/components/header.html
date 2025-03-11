@@ -1,10 +1,16 @@
-{% set menu = [{"title": "index.cooking","url": "/",},{"title": "about", "url": "/about"},{"title": "recipes", "url": "/home"}]%}
+{% set menu = [{"title": "index.cooking","url": "/",},{"title": "about", "url":
+"/about"},{"title": "recipes", "url": "/home"}]%}
 <header>
-<nav>
-  <ul>
-    {% for item in menu %}
+  <nav>
+    <ul>
+      {% for item in menu %}
       <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
-  </ul>
-</nav>
+      {% endfor %}
+    </ul>
+    <ul>
+      <li>
+        <a href="">my account</a>
+      </li>
+    </ul>
+  </nav>
 </header>

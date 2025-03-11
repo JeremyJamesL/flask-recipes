@@ -1,32 +1,48 @@
 <!-- Renders the main part of the app, including recipes, filters, pagination -->
 
 <div class="app">
-<h3>Filter by tag</h3>
-<form class="tags" hx-post="/recipes/search" hx-trigger="change" hx-include="#search" hx-target=".app" hx-swap="innerHTML" id="facets">
-  {% for facet in facets %}
-  <label><input type="checkbox" name="choice-{{ loop.index }}" value="{{ facet.name }}"
+  <h3>Filter by tag</h3>
+  <form
+    class="tags"
+    hx-post="/recipes/search"
+    hx-trigger="change"
+    hx-include="#search"
+    hx-target=".app"
+    hx-swap="innerHTML"
+    id="facets"
+  >
+    {% for facet in facets %}
+    <label
+      ><input
+        type="checkbox"
+        name="choice-{{ loop.index }}"
+        value="{{ facet.name }}"
+        {%
+        if
+        facet.checked
+        %}
+        checked
+        {%
+        endif
+        %}
+      />{{ facet.name }}</label
+    >
+    {% endfor %}
+  </form>
+  <hr />
 
-    {% if facet.checked %}
-    checked
-    {% endif %}
-
-  />{{ facet.name }}</label>
-  {% endfor %}
-</form>
-<hr/>
-
-{% if recipes|length > 0 %}
-<ul class="recipes">
-  {% for recipe in recipes %}
-  <li>
-    <a href="/recipe/{{recipe._id}}">{{ recipe.title }}</a>
+  {% if recipes|length > 0 %}
+  <ul class="recipes">
+    {% for recipe in recipes %}
+    <li>
+      <a href="/recipe/{{recipe._id}}">{{ recipe.title }}</a>
       <span>{{ recipe.author }}</span>
-  </li>
-  {% endfor %}
-</ul>
+    </li>
+    {% endfor %}
+  </ul>
 
-{% else %}
-<p><i>No recipes, start adding some above</i></p>
-{% endif %}
-<div>
- 
+  {% else %}
+  <p><i>No recipes found</i></p>
+  {% endif %}
+  <div></div>
+</div>

@@ -24,6 +24,13 @@ def get_single_recipe(objectId):
     single_recipe = mongo_collection.find_one({"_id": ObjectId(objectId) })
     return single_recipe
 
+def delete_single_recipe(objectId):
+    try:
+        mongo_collection.delete_one({"_id": ObjectId(objectId)}) 
+        return {"success": True, "id": objectId}
+    except:
+        return {"success": False, "error": "Could not delete recipe"}
+
 def search_recipes(query_data):
     query = query_data["q"]
     facets_list = []
