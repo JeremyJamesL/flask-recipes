@@ -77,5 +77,4 @@ def get_facets(user, query_data=None):
         facets = mongo_collection.distinct("tags")
         for facet in facets:
             new_list.append({"name": facet, "checked": False})
-        print(facets, "in get facets")
         return new_list

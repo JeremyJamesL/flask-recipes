@@ -1,5 +1,5 @@
-import json
 from flask import Flask, Response, render_template, request, session, redirect, url_for
+import functools
 from scripts.database.mongo import mongo_database
 from scripts.scraping.scraper import scrape
 from scripts.recipes.handle_recipes import recipe_exists, add_single_recipe, get_all_recipes, get_single_recipe, get_facets, delete_single_recipe, search_recipes
@@ -8,33 +8,47 @@ from scripts.users.handle_users import user_exists, authenticate_user
 user = "jez"
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.secret_key = 'wdkbahjfbqb' 
+
+# Decorator function to check for username in session to protect routes
+def login_required(func):
+    @functools.wraps(func)
+    def secure_function():
+        if "username" not in session:
+            return redirect(url_for("login"))
+        return func()
+    return secure_function
 
 # Pages
 @app.route("/home")
+@login_required
 def home_page():
+    print(session)
     tags = get_facets(user)
     all_recipes = get_all_recipes(user)
-    return render_template("/pages/home.html",recipes=all_recipes, facets=tags)
+    return render_template("/pages/home.html",recipes=all_recipes, facets=tags, username=session["username"])
 
 @app.route("/")
 def landing_page():
     return render_template("/pages/landing.html")
 
 @app.route("/recipe/<recipe_id>")
+@login_required
 def single_recipe_page(recipe_id):
     recipe_details = get_single_recipe(recipe_id)
-    return render_template("/pages/single-recipe.html", single_recipe=recipe_details)
+    return render_template("/pages/single-recipe.html", single_recipe=recipe_details, username=session["username"])
 
 @app.route("/login")
 def login():
     return render_template("/pages/login.html")
 
+
 @app.route("/account")
 def account():
-    if "email" not in session:
+    if "username" not in session:
         return redirect(url_for("login"))
     else:
-        return render_template("account.html", name=session["username"])
+        return render_template("/pages/account.html", username=session["username"])
 
 # API routes
 @app.post("/recipes/add")
@@ -82,6 +96,13 @@ def login_user():
     elif res["success"] and res["user"] is not None:
         res = authenticate_user(user, pw)
         if res["success"]:
+            session["username"] = user
             return Response(headers={"HX-Redirect": "/home"})
     else:
         return "<p class='error'>Something went wrong with the login</p>"
+
+
+@app.post("/logout")
+def logout_user():
+    session.pop('username', None)    
+    return Response(headers={"HX-Redirect": "/"})
